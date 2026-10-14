@@ -72,7 +72,7 @@ export function Stages() {
           <div
             className="range"
             style={{
-              ["--fill" as string]: `${(at / (STAGES.length - 1)) * 100}%`,
+              ["--fill" as string]: at / (STAGES.length - 1),
             }}
           >
             <input

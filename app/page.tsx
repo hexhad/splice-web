@@ -27,7 +27,8 @@ export default function Home() {
         Skip to content
       </a>
 
-      <header className="bar wrap">
+      <header className="top">
+        <div className="bar wrap">
         <a href="/" className="wordmark" aria-label="Splice, home">
           <SpliceIcon size={32} className="wordmark-icon" />
           Splice
@@ -41,6 +42,7 @@ export default function Home() {
         <a className="btn bar-btn" href={PLAY_URL}>
           Get Splice
         </a>
+        </div>
       </header>
 
       <main id="main">

@@ -134,7 +134,7 @@ export function CutDemo() {
         {regions.map((r, i) => (
           <li key={`${r.start}-${r.end}`} className="cut-chip">
             <span className="mono">
-              {i + 1}&nbsp;&nbsp;{formatTime(r.start)}–{formatTime(r.end)}
+              {i + 1}&nbsp;&nbsp;{formatTime(r.start)} - {formatTime(r.end)}
             </span>
             <button
               type="button"

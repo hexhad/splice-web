@@ -15,7 +15,8 @@ const UPDATED = "14 October 2026";
 export default function Privacy() {
   return (
     <>
-      <header className="bar wrap">
+      <header className="top">
+        <div className="bar wrap">
         <a href="/" className="wordmark" aria-label="Splice, home">
           <SpliceIcon size={32} className="wordmark-icon" />
           Splice
@@ -23,6 +24,7 @@ export default function Privacy() {
         <a className="btn bar-btn" href={PLAY_URL}>
           Get Splice
         </a>
+        </div>
       </header>
 
       <main className="policy wrap">

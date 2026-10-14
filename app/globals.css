@@ -17,15 +17,33 @@
   --on-ember: #301000;
   --select: #3c4bd4;
   --select-soft: rgba(60, 75, 212, 0.14);
+  --select-fill: #dfe2ff;
+  --select-fill-hover: #cfd4ff;
+  --on-select-fill: #2a36a8;
+  --ink-hover: #262a2f;
+  --tile-ink: #0c0e10;
+  --wave: var(--ember-700);
+  --dot: #c4c8cc;
+  /* The product's own dialog (the closing fragment), as in the app's light theme */
+  --sheet: #f8f8f9;
+  --sheet-2: #eeeff1;
+  --sheet-line: #d5d8dc;
+  --field-line: #74797f;
+  --sheet-size: #ffffff;
+  --go: var(--ember-700);
+  --go-hover: #943a00;
+  --on-go: #ffffff;
+  color-scheme: light dark;
 
   --gutter: clamp(16px, 2.4vw, 36px);
   --section: clamp(96px, 12vw, 200px);
 
-  --t-display: clamp(44px, 6.4vw, 104px);
-  --t-heading: clamp(34px, 4.4vw, 72px);
-  --t-statement: clamp(20px, 1.7vw, 24px);
-  --t-body: 18px;
-  --t-small: 14px;
+  /* rem, not px: type follows the reader's own text-size setting */
+  --t-display: clamp(2.75rem, 6.4vw, 6.5rem);
+  --t-heading: clamp(2.125rem, 4.4vw, 4.5rem);
+  --t-statement: clamp(1.25rem, 1.7vw, 1.5rem);
+  --t-body: 1.125rem;
+  --t-small: 0.875rem;
 
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
@@ -35,13 +53,47 @@
   --t-reveal: 800ms;
 }
 
+/* Dark: the app's own dark scheme (ui/theme/Theme.kt). The colour fields keep their roles:
+   the input half stays the darkest tone, the closing field stays Ember. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ground: #0a0b0d;
+    --ink: #ededef;
+    --ink-soft: #9ba1a8;
+    --tone: #121417;
+    --tone-2: #1f2327;
+    --dark: #060708;
+    --dark-2: #1a1d21;
+    --ember-700: #ffa060;
+    --ember-soft: #3a1c08;
+    --select: #a4bbff;
+    --select-soft: rgba(164, 187, 255, 0.16);
+    --select-fill: #1e2a6e;
+    --select-fill-hover: #26347f;
+    --on-select-fill: #dde7ff;
+    --ink-hover: #d4d6d9;
+    --tile-ink: #1a1d21;
+    --wave: var(--ember);
+    --dot: #3a3f45;
+    --sheet: #1a1d21;
+    --sheet-2: #24282c;
+    --sheet-line: #2a2f34;
+    --field-line: #6b7178;
+    --sheet-size: #121417;
+    --go: var(--ember);
+    --go-hover: #ff8a36;
+    --on-go: var(--on-ember);
+  }
+}
+
 @theme inline {
   --font-sans: var(--font-geist-sans);
 }
 
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+/* Anchors land below the floating header, not under it */
+html { scroll-behavior: smooth; scroll-padding-top: 88px; -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
@@ -52,7 +104,12 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   font-feature-settings: "ss01";
+  /* Every pressable element has its own :active state */
+  -webkit-tap-highlight-color: transparent;
 }
+
+h1, h2, h3, .display, .heading { text-wrap: balance; }
+p, li { text-wrap: pretty; }
 
 ::selection { background: var(--ember); color: var(--on-ember); }
 
@@ -77,7 +134,8 @@ a { color: inherit; }
   margin: 0;
 }
 .statement { font-size: var(--t-statement); line-height: 1.32; letter-spacing: -0.01em; margin: 0; }
-.small { font-size: var(--t-small); line-height: 1.45; }
+/* Small text opens up slightly; large text (above) tightens */
+.small { font-size: var(--t-small); line-height: 1.45; letter-spacing: 0.01em; }
 .soft { color: var(--ink-soft); }
 .tnum { font-variant-numeric: tabular-nums; }
 
@@ -100,10 +158,10 @@ a { color: inherit; }
   cursor: pointer;
   transition: transform var(--t-press) var(--ease-out), background-color var(--t-hover) ease;
 }
-.btn:hover { background: #ff8a36; }
+@media (hover: hover) { .btn:hover { background: #ff8a36; } }
 .btn:active { transform: scale(0.97); }
 .btn-ink { background: var(--ink); color: var(--ground); }
-.btn-ink:hover { background: #262a2f; }
+@media (hover: hover) { .btn-ink:hover { background: var(--ink-hover); } }
 
 .link {
   text-decoration: underline;
@@ -154,4 +212,6 @@ a { color: inherit; }
   html { scroll-behavior: auto; }
   .js .rise, .js .settle, .js .mask > span, .js .after-mask { opacity: 1 !important; transform: none !important; transition: none !important; }
   * { animation: none !important; }
+  /* Reduced, not removed: swaps keep their cross-fade but lose the movement */
+  .stages-shot img { transform: none !important; }
 }
