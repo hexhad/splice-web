@@ -1,28 +1,26 @@
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import './globals.css';
+import type { Metadata, Viewport } from "next";
+import { Geist } from "next/font/google";
+import "./globals.css";
 
-const inter = Inter({ subsets: ['latin'] });
+const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Splice - Professional Audio Editor for Android',
-  description: 'Cut, layer, mix, and export high-quality audio. All on your Android device. Multi-track editing with professional EQ, speed control, and precision trim.',
-  keywords: 'audio editor, Android, music production, audio mixing, DAW',
-  openGraph: {
-    title: 'Splice - Audio Editor for Android',
-    description: 'Professional audio editing made simple',
-    type: 'website',
-  },
+  title: { default: "Splice — cut, join and polish audio on Android", template: "%s · Splice" },
+  description:
+    "Splice is an offline Android audio editor. Mark several parts and cut them at once, layer tracks, shape the sound, and export M4A or WAV. No permissions, no internet.",
+  applicationName: "Splice",
+  authors: [{ name: "HEXHAD Studios" }],
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export const viewport: Viewport = { themeColor: "#ffffff" };
+
+export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" className={geistSans.variable} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+      </head>
+      <body>{children}</body>
     </html>
   );
 }
