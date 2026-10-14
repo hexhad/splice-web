@@ -11,7 +11,8 @@ p.fade-swap { display: block; }
 
 /* ---------- bar ---------- */
 .bar { display: flex; align-items: center; gap: 32px; height: 76px; }
-.wordmark { font-weight: 700; font-size: 24px; letter-spacing: -0.03em; text-decoration: none; margin-right: auto; }
+.wordmark { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 24px; letter-spacing: -0.03em; text-decoration: none; margin-right: auto; }
+.wordmark-icon { border-radius: 8px; flex: none; }
 .bar-nav { display: flex; gap: 28px; font-size: 16px; }
 .bar-nav a { text-decoration: none; color: var(--ink-soft); transition: color var(--t-hover) ease; }
 .bar-nav a:hover { color: var(--ink); }
@@ -248,7 +249,8 @@ p.fade-swap { display: block; }
 .tile-email { font-size: 18px; text-decoration: none; overflow-wrap: anywhere; }
 .tile-email:hover { color: var(--ember-700); }
 .tile-word { grid-column: 1 / 9; min-height: 320px; background: var(--ink); color: #f4f5f6; justify-content: space-between; overflow: hidden; }
-.tile-splice { font-size: 9vw; font-weight: 700; letter-spacing: -0.05em; line-height: 0.8; text-align: center; }
+.tile-splice { display: flex; align-items: center; justify-content: center; gap: 0.12em; font-size: 9vw; font-weight: 700; letter-spacing: -0.05em; line-height: 0.8; }
+.tile-splice-icon { width: 0.8em; height: 0.8em; flex: none; }
 .tile-go {
   grid-column: 9 / -1; min-height: 320px; background: var(--ember); color: var(--on-ember); text-decoration: none;
   font-size: 28px; line-height: 1.15; letter-spacing: -0.02em; font-weight: 600;

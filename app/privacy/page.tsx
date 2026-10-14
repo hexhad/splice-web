@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import "../site.css";
 import "./privacy.css";
 import { HexhadLockup } from "../_components/Hexhad";
+import { SpliceIcon } from "../_components/SpliceIcon";
 import { CONTACT_EMAIL, PLAY_URL } from "@/lib/links";
 
 export const metadata: Metadata = {
   title: "Privacy policy",
-  description: "Splice collects no personal data. It asks for no permissions and has no internet access.",
+  description: "Splice collects no personal data. Its only permission is the microphone, for recording, and it has no internet access.",
 };
 
 const UPDATED = "14 October 2026";
@@ -16,6 +17,7 @@ export default function Privacy() {
     <>
       <header className="bar wrap">
         <a href="/" className="wordmark" aria-label="Splice, home">
+          <SpliceIcon size={32} className="wordmark-icon" />
           Splice
         </a>
         <a className="btn bar-btn" href={PLAY_URL}>
@@ -26,8 +28,9 @@ export default function Privacy() {
       <main className="policy wrap">
         <h1 className="display policy-title">Privacy policy</h1>
         <p className="statement policy-lede">
-          Splice collects nothing about you. It asks for no permissions, it has no internet access, and your audio
-          stays on your phone unless you choose to save or share it somewhere else.
+          Splice collects nothing about you. Its only permission is the microphone, which it asks for when you first
+          tap Record. It has no internet access, and your audio stays on your phone unless you choose to save or share
+          it somewhere else.
         </p>
         <p className="small soft">
           For the Splice app for Android (com.hexhad.splice), made by HEXHAD Studios. Last updated {UPDATED}.
@@ -43,13 +46,19 @@ export default function Privacy() {
 
           <h2>Permissions</h2>
           <p>
-            Splice declares no Android permissions. It cannot read your storage, use the microphone or camera, see your
-            location or contacts, or connect to the internet. The build of the app fails if any permission is added, so
-            this cannot change by accident.
+            Splice declares one Android permission: the microphone. Android asks you for it the first time you tap
+            Record, and you can say no and still use everything else. Splice uses the microphone only while its
+            recording screen is open, and stops when you tap Stop, Discard, or leave the app. It cannot read your
+            storage, use the camera, see your location or contacts, or connect to the internet. The build of the app
+            fails if any other permission is added, so this cannot change by accident.
           </p>
 
           <h2>Your audio files</h2>
           <ul>
+            <li>
+              Recordings are written to Splice&rsquo;s private storage on your phone and added to the project you are
+              editing. They are never uploaded, and Splice records nothing in the background.
+            </li>
             <li>
               Files reach Splice only when you pick them in Android&rsquo;s system file picker, or open them with
               &ldquo;Edit in Splice&rdquo; from another app. Splice sees only the files you choose.

@@ -6,11 +6,18 @@ import { JoinDemo } from "./_components/JoinDemo";
 import { LocalTime } from "./_components/LocalTime";
 import { Motion } from "./_components/Motion";
 import { Questions } from "./_components/Questions";
+import { SpliceIcon } from "./_components/SpliceIcon";
 import { Stages } from "./_components/Stages";
 import { ToolList } from "./_components/ToolList";
-import { CONTACT_EMAIL, PLAY_URL, STUDIO_URL } from "@/lib/links";
+import { CONTACT_EMAIL, PLAY_URL } from "@/lib/links";
 
-const FAMILY = ["NotchPal", "BarQR", "Droid Transfer", "MirrorMe"];
+const FAMILY = [
+  { name: "NotchPal", href: "https://notch-pal-nine.vercel.app" },
+  { name: "BarQR", href: "https://barqr-site.vercel.app" },
+  { name: "Droid Transfer", href: "https://droid-transfer-web.vercel.app" },
+  { name: "MirrorMe", href: "https://mirror-me-web.vercel.app" },
+  { name: "DiskKeeper", href: "https://disk-keeper-web.vercel.app" },
+];
 
 export default function Home() {
   return (
@@ -22,6 +29,7 @@ export default function Home() {
 
       <header className="bar wrap">
         <a href="/" className="wordmark" aria-label="Splice, home">
+          <SpliceIcon size={32} className="wordmark-icon" />
           Splice
         </a>
         <nav aria-label="Main" className="bar-nav">
@@ -48,8 +56,8 @@ export default function Home() {
             </h1>
             <div className="after-mask">
               <p className="statement hero-sentence">
-                Splice is an audio editor for Android that works entirely on your phone. No permissions, no internet,
-                no account.
+                Splice is an audio editor for Android that works entirely on your phone. No internet, no account, and the
+                microphone only when you record.
               </p>
               <div className="hero-actions">
                 <a className="btn" href={PLAY_URL}>
@@ -119,8 +127,8 @@ export default function Home() {
           <p className="small soft">Also from HEXHAD</p>
           <ul>
             {FAMILY.map((p) => (
-              <li key={p}>
-                <a href={STUDIO_URL}>{p}</a>
+              <li key={p.name}>
+                <a href={p.href}>{p.name}</a>
               </li>
             ))}
           </ul>
@@ -136,6 +144,7 @@ export default function Home() {
         <div className="tile tile-word rise" style={{ ["--d" as string]: "90ms" }}>
           <HexhadLockup size={40} className="tile-lockup" />
           <span className="tile-splice" aria-hidden>
+            <SpliceIcon className="tile-splice-icon" />
             Splice
           </span>
         </div>

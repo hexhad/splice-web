@@ -7,7 +7,7 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 export const metadata: Metadata = {
   title: { default: "Splice — cut, join and polish audio on Android", template: "%s · Splice" },
   description:
-    "Splice is an offline Android audio editor. Mark several parts and cut them at once, layer tracks, shape the sound, and export M4A or WAV. No permissions, no internet.",
+    "Splice is an offline Android audio editor. Mark several parts and cut them at once, record over your audio, layer tracks, shape the sound, and export M4A or WAV. No internet, and the microphone only when you record.",
   applicationName: "Splice",
   authors: [{ name: "HEXHAD Studios" }],
 };

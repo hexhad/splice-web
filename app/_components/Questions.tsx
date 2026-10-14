@@ -5,7 +5,7 @@ import { useState, type ReactNode } from "react";
 const QA: { q: string; a: ReactNode }[] = [
   {
     q: "Does Splice ask for any permissions?",
-    a: "None. Not storage, not the microphone, not the internet. Files reach it through Android's own picker, so it only ever sees the ones you choose.",
+    a: "One: the microphone, and Android asks only when you first tap Record. Say no and everything else still works. Splice never asks for storage or the internet; files reach it through Android's own picker, so it only ever sees the ones you choose.",
   },
   {
     q: "Does it send my audio anywhere?",

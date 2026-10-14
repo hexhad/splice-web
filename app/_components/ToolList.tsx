@@ -6,6 +6,7 @@ const TOOLS = [
   { name: "Delete marked parts", says: "Mark any number of parts, then remove every one of them in a single step. The gaps close up on their own." },
   { name: "Keep only", says: "The reverse: keep the parts you marked and drop everything around them." },
   { name: "Extract", says: "Save each marked part as a file of its own." },
+  { name: "Record", says: "Record from the mic straight into the project, at the playhead or on a new track while the rest plays along." },
   { name: "Layer a track", says: "Put music under a voice. Drag a clip to move it, drag an edge to trim it." },
   { name: "Mixer", says: "Volume, mute and solo for every track, with the level in decibels." },
   { name: "Equaliser", says: "Four bands you drag on the curve, plus Voice, Podcast and Bass boost presets." },
