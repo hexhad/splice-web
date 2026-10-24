@@ -1,5 +1,6 @@
 "use client";
 
+import { useInView } from "motion/react";
 import { useMemo, useRef, useState } from "react";
 import { BARS_PER_SECOND, type Region, formatTime, mergeRegions, regionLength, snap, voiceWave } from "@/lib/wave";
 
@@ -21,6 +22,13 @@ export function CutDemo() {
 
   const total = bars.length / BARS_PER_SECOND;
   const selected = regionLength(regions);
+  // One path for the whole waveform, rebuilt only when the audio changes (not on every drag move).
+  const wave = useMemo(
+    () => bars.map((a, i) => `M${(i + 0.18).toFixed(2)} ${(50 - a * 46).toFixed(2)}h0.64v${(a * 92).toFixed(2)}h-0.64z`).join(""),
+    [bars],
+  );
+  // The playhead only runs while the demo is on screen.
+  const onScreen = useInView(stage);
   const ticks = useMemo(() => Array.from({ length: Math.floor(total / 5) + 1 }, (_, i) => i * 5), [total]);
 
   const toSeconds = (clientX: number) => {
@@ -88,7 +96,7 @@ export function CutDemo() {
 
       <div
         ref={stage}
-        className="cut-stage"
+        className={onScreen ? "cut-stage" : "cut-stage cut-off"}
         role="application"
         tabIndex={0}
         aria-label={`Waveform, ${formatTime(total)} long, ${regions.length} marked parts. Drag to mark a part, or press Enter to mark one.`}
@@ -98,7 +106,11 @@ export function CutDemo() {
           const s = toSeconds(e.clientX);
           setDraft({ anchor: s, now: s });
         }}
-        onPointerMove={(e) => draft && setDraft({ ...draft, now: toSeconds(e.clientX) })}
+        onPointerMove={(e) => {
+          if (!draft) return;
+          const now = toSeconds(e.clientX);
+          if (now !== draft.now) setDraft({ ...draft, now }); // positions snap to 0.1 s: skip moves inside a step
+        }}
         onPointerUp={() => {
           if (draft) commit({ start: Math.min(draft.anchor, draft.now), end: Math.max(draft.anchor, draft.now) });
           setDraft(null);
@@ -112,9 +124,7 @@ export function CutDemo() {
         }}
       >
         <svg viewBox={`0 0 ${bars.length} 100`} preserveAspectRatio="none" aria-hidden>
-          {bars.map((a, i) => (
-            <rect key={i} x={i + 0.18} width={0.64} y={50 - a * 46} height={a * 92} rx={0.3} />
-          ))}
+          <path d={wave} />
         </svg>
         <i className="cut-play" aria-hidden />
         {shown.map((r, i) => (
