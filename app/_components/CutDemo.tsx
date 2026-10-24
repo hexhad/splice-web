@@ -63,7 +63,7 @@ export function CutDemo() {
   const edited = bars !== SOURCE || regions !== START;
 
   return (
-    <div data-ui className="cut" aria-label="A working copy of the Splice editor">
+    <div data-ui className="cut glass" aria-label="A working copy of the Splice editor">
       <div className="cut-head">
         <span className="cut-title">Interview, take 2</span>
         {edited ? (

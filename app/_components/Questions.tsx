@@ -1,6 +1,8 @@
 "use client";
 
+import { motion } from "motion/react";
 import { useState, type ReactNode } from "react";
+import { Reveal, SWAP } from "./Reveal";
 
 const QA: { q: string; a: ReactNode }[] = [
   {
@@ -47,9 +49,11 @@ export function Questions() {
   return (
     <div className="qa">
       <ul className="qa-list">
-        <li className="qa-title soft rise">Questions, answered</li>
+        <Reveal as="li" className="qa-title soft">
+          Questions, answered
+        </Reveal>
         {QA.map((item, i) => (
-          <li key={item.q} className="rise" data-on={i === open || undefined} style={{ ["--d" as string]: `${60 + i * 60}ms` }}>
+          <Reveal as="li" key={item.q} data-on={i === open || undefined} delay={0.06 + i * 0.05}>
             <button
               type="button"
               aria-expanded={i === open}
@@ -57,18 +61,18 @@ export function Questions() {
               onFocus={() => setOpen(i)}
               onClick={() => setOpen(i)}
             >
-              <i aria-hidden />
+              <i aria-hidden>{i === open ? <motion.b layoutId="qa-dot" transition={SWAP} /> : null}</i>
               {item.q}
             </button>
             <div className="qa-inline">{item.a}</div>
-          </li>
+          </Reveal>
         ))}
       </ul>
-      <div className="qa-pane rise" aria-live="polite" style={{ ["--d" as string]: "200ms" }}>
-        <p key={open} className="fade-swap">
+      <Reveal className="qa-pane glass" delay={0.2} aria-live="polite">
+        <motion.p key={open} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={SWAP}>
           {QA[open].a}
-        </p>
-      </div>
+        </motion.p>
+      </Reveal>
     </div>
   );
 }

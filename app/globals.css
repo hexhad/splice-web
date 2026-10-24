@@ -35,6 +35,17 @@
   --on-go: #ffffff;
   color-scheme: light dark;
 
+  /* Liquid Glass (web approximation): translucent fill, blur + saturation, bright edge, floating shadow.
+     The warm Ember light behind the page gives it something to refract. */
+  --paper: #fffaf6;
+  --glow-1: rgb(255 119 22 / 0.20);
+  --glow-2: rgb(255 170 100 / 0.16);
+  --glass-bg: rgb(255 255 255 / 0.58);
+  --glass-strong: rgb(255 255 255 / 0.74);
+  --glass-edge: rgb(255 255 255 / 0.9);
+  --glass-rim: rgb(48 16 0 / 0.07);
+  --glass-shadow: 0 1px 0 rgb(255 255 255 / 0.7) inset, 0 20px 50px -22px rgb(90 31 2 / 0.28);
+
   --gutter: clamp(16px, 2.4vw, 36px);
   --section: clamp(96px, 12vw, 200px);
 
@@ -83,6 +94,15 @@
     --go: var(--ember);
     --go-hover: #ff8a36;
     --on-go: var(--on-ember);
+
+    --paper: #0a0b0d;
+    --glow-1: rgb(255 119 22 / 0.16);
+    --glow-2: rgb(194 71 10 / 0.14);
+    --glass-bg: rgb(30 24 21 / 0.5);
+    --glass-strong: rgb(30 24 21 / 0.68);
+    --glass-edge: rgb(255 214 180 / 0.2);
+    --glass-rim: rgb(255 255 255 / 0.06);
+    --glass-shadow: 0 1px 0 rgb(255 255 255 / 0.07) inset, 0 26px 60px -22px rgb(0 0 0 / 0.65);
   }
 }
 
@@ -97,7 +117,8 @@ html { scroll-behavior: smooth; scroll-padding-top: 88px; -webkit-text-size-adju
 
 body {
   margin: 0;
-  background: var(--ground);
+  background: var(--paper);
+  overflow-x: clip;
   color: var(--ink);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
   font-size: var(--t-body);
@@ -140,6 +161,50 @@ a { color: inherit; }
 .tnum { font-variant-numeric: tabular-nums; }
 
 /* Buttons: pill, one fill, as in the app */
+/* Warm Ember light behind the page so the glass has something to refract. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -20vh -10vw auto;
+  height: 110vh;
+  background:
+    radial-gradient(38% 46% at 78% 26%, var(--glow-1), transparent 70%),
+    radial-gradient(30% 36% at 12% 8%, var(--glow-2), transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.glass {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--glass-rim); /* taste-skill-ignore: glass rim */
+  box-shadow: var(--glass-shadow);
+  position: relative;
+  isolation: isolate;
+}
+/* Bright specular edge: strongest top-left and bottom-right, gone along the sides. */
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(160deg, var(--glass-edge), transparent 38%, transparent 70%, var(--glass-edge));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: -1;
+}
+@media (prefers-reduced-transparency: reduce) {
+  .glass { background: var(--tone); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+@media (prefers-contrast: more) {
+  .glass { background: var(--ground); -webkit-backdrop-filter: none; backdrop-filter: none; border-color: var(--ink); }
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -149,16 +214,17 @@ a { color: inherit; }
   padding: 0 26px;
   border: 0;
   border-radius: 999px;
-  background: var(--ember);
+  background: linear-gradient(180deg, #ff9440, var(--ember) 55%, #f0650a);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.45) inset, 0 -1px 0 rgb(120 40 0 / 0.25) inset, 0 10px 24px -10px rgb(255 119 22 / 0.7);
   color: var(--on-ember);
   font: inherit;
   font-size: 18px;
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
-  transition: transform var(--t-press) var(--ease-out), background-color var(--t-hover) ease;
+  transition: transform var(--t-press) var(--ease-out), filter var(--t-hover) ease;
 }
-@media (hover: hover) { .btn:hover { background: #ff8a36; } }
+@media (hover: hover) { .btn:hover { filter: brightness(1.06); } }
 .btn:active { transform: scale(0.97); }
 .btn-ink { background: var(--ink); color: var(--ground); }
 @media (hover: hover) { .btn-ink:hover { background: var(--ink-hover); } }
@@ -176,32 +242,9 @@ a { color: inherit; }
 [data-ui] { font-family: var(--font-geist-sans), system-ui, sans-serif; }
 [data-ui] .mono { font-variant-numeric: tabular-nums; letter-spacing: 0.01em; }
 
-/* Motion: hidden states only exist once the script has marked <html class="js"> */
-.js .rise { opacity: 0; transform: translateY(24px); }
-.js .rise.in {
-  opacity: 1;
-  transform: none;
-  transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
-  transition-delay: var(--d, 0ms);
-}
-.js .settle { opacity: 0; transform: scale(1.04); }
-.js .settle.in {
-  opacity: 1;
-  transform: none;
-  transition: opacity 900ms var(--ease-out), transform 1200ms var(--ease-out);
-  transition-delay: var(--d, 0ms);
-}
-
+/* Hero lines rise out of these masks (Motion drives the inner span). */
 .mask { display: block; overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
 .mask > span { display: block; }
-.js .mask > span { transform: translateY(105%); }
-.js .ready .mask > span {
-  transform: none;
-  transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
-  transition-delay: var(--d, 0ms);
-}
-.js .after-mask { opacity: 0; }
-.js .ready .after-mask { opacity: 1; transition: opacity 600ms var(--ease-out) 420ms; }
 
 @keyframes drift {
   from { transform: translateY(0); }
@@ -210,8 +253,5 @@ a { color: inherit; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .js .rise, .js .settle, .js .mask > span, .js .after-mask { opacity: 1 !important; transform: none !important; transition: none !important; }
   * { animation: none !important; }
-  /* Reduced, not removed: swaps keep their cross-fade but lose the movement */
-  .stages-shot img { transform: none !important; }
 }
