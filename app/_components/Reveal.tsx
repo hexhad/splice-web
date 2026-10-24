@@ -3,8 +3,8 @@
 import { motion, MotionConfig } from "motion/react";
 import type { CSSProperties, ReactNode } from "react";
 
-/** One spring for every entrance: no bounce, settles in about 0.8 s. */
-export const ENTER = { type: "spring", bounce: 0, duration: 0.8 } as const;
+/** One spring for every entrance: a touch of bounce, settles in about 1 s. */
+export const ENTER = { type: "spring", bounce: 0.18, duration: 1 } as const;
 /** Short swaps inside the demos. */
 export const SWAP = { type: "spring", bounce: 0, duration: 0.32 } as const;
 
@@ -23,6 +23,10 @@ type RevealProps = {
   delay?: number;
   /** Distance it rises, in px. */
   y?: number;
+  /** Distance it slides in from the side, in px (negative = from the left). */
+  x?: number;
+  /** Scale it grows from. */
+  from?: number;
   /** Starts slightly large and settles, for big images. */
   settle?: boolean;
   /** Plays on page load instead of when scrolled into view. */
@@ -39,14 +43,14 @@ type RevealProps = {
 };
 
 /** Rises into place once. Under reduced motion it only fades (see MotionProvider). */
-export function Reveal({ as = "div", delay = 0, y = 24, settle, onLoad, ...rest }: RevealProps) {
+export function Reveal({ as = "div", delay = 0, y = 48, x = 0, from: grow = 0.96, settle, onLoad, ...rest }: RevealProps) {
   const Comp = TAGS[as] as typeof motion.div;
-  const from = settle ? { opacity: 0, scale: 1.04 } : { opacity: 0, y };
-  const to = settle ? { opacity: 1, scale: 1 } : { opacity: 1, y: 0 };
+  const from = settle ? { opacity: 0, scale: 1.08, y: 40 } : { opacity: 0, y, x, scale: grow };
+  const to = settle ? { opacity: 1, scale: 1, y: 0 } : { opacity: 1, y: 0, x: 0, scale: 1 };
   return (
     <Comp
       initial={from}
-      {...(onLoad ? { animate: to } : { whileInView: to, viewport: { once: true, margin: "0px 0px -12% 0px" } })}
+      {...(onLoad ? { animate: to } : { whileInView: to, viewport: { once: true, margin: "0px 0px -8% 0px" } })}
       transition={{ ...ENTER, delay }}
       {...(rest as object)}
     />

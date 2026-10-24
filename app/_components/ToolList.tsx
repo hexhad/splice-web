@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 import { useId, useState } from "react";
-import { SWAP } from "./Reveal";
+import { ENTER, SWAP } from "./Reveal";
 
 const TOOLS = [
   { name: "Delete marked parts", says: "Mark any number of parts, then remove every one of them in a single step. The gaps close up on their own." },
@@ -55,7 +55,14 @@ export function ToolList() {
       />
       <ul id={`${id}-list`} className="tools-list">
         {shown.map((t, i) => (
-          <li key={t.name} className={i === current ? "on" : undefined}>
+          <motion.li
+            key={t.name}
+            className={i === current ? "on" : undefined}
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "0px 0px -8% 0px" }}
+            transition={{ ...ENTER, delay: Math.min(i, 8) * 0.05 }}
+          >
             <button
               type="button"
               aria-expanded={i === current}
@@ -67,7 +74,7 @@ export function ToolList() {
               <span className="tools-name">{t.name}</span>
               <span className="tools-says">{t.says}</span>
             </button>
-          </li>
+          </motion.li>
         ))}
         {shown.length === 0 ? <li className="tools-none statement">Nothing by that name. Try “fade” or “EQ”.</li> : null}
       </ul>
