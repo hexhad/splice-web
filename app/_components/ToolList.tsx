@@ -1,6 +1,8 @@
 "use client";
 
+import { motion } from "motion/react";
 import { useId, useState } from "react";
+import { SWAP } from "./Reveal";
 
 const TOOLS = [
   { name: "Delete marked parts", says: "Mark any number of parts, then remove every one of them in a single step. The gaps close up on their own." },
@@ -61,6 +63,7 @@ export function ToolList() {
               onFocus={() => setActive(i)}
               onClick={() => setActive(i)}
             >
+              {i === current ? <motion.span layoutId="tool-on" className="tools-on" transition={SWAP} aria-hidden /> : null}
               <span className="tools-name">{t.name}</span>
               <span className="tools-says">{t.says}</span>
             </button>

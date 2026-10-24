@@ -4,8 +4,8 @@ import { ExportSheet } from "./_components/ExportSheet";
 import { HexhadLockup } from "./_components/Hexhad";
 import { JoinDemo } from "./_components/JoinDemo";
 import { LocalTime } from "./_components/LocalTime";
-import { Motion } from "./_components/Motion";
 import { Questions } from "./_components/Questions";
+import { MaskedLines, Reveal } from "./_components/Reveal";
 import { SpliceIcon } from "./_components/SpliceIcon";
 import { Stages } from "./_components/Stages";
 import { ToolList } from "./_components/ToolList";
@@ -22,13 +22,12 @@ const FAMILY = [
 export default function Home() {
   return (
     <>
-      <Motion />
       <a className="skip" href="#main">
         Skip to content
       </a>
 
       <header className="top">
-        <div className="bar wrap">
+        <div className="bar glass">
         <a href="/" className="wordmark" aria-label="Splice, home">
           <SpliceIcon size={32} className="wordmark-icon" />
           Splice
@@ -46,17 +45,10 @@ export default function Home() {
       </header>
 
       <main id="main">
-        <section className="hero wrap" data-hero>
+        <section className="hero wrap">
           <div className="hero-words">
-            <h1 className="display">
-              <span className="mask">
-                <span>Mark the parts.</span>
-              </span>
-              <span className="mask">
-                <span style={{ ["--d" as string]: "110ms" }}>Cut them at once.</span>
-              </span>
-            </h1>
-            <div className="after-mask">
+            <MaskedLines className="display" lines={["Mark the parts.", "Cut them at once."]} />
+            <Reveal onLoad delay={0.42} y={12} className="hero-copy">
               <p className="statement hero-sentence">
                 Splice is an audio editor for Android that works entirely on your phone. No internet, no account, and the
                 microphone only when you record.
@@ -69,12 +61,12 @@ export default function Home() {
                   See how it works
                 </a>
               </div>
-            </div>
+            </Reveal>
           </div>
-          <div className="hero-demo after-mask">
+          <Reveal onLoad delay={0.5} y={32} className="hero-demo">
             <CutDemo />
             <p className="small soft hero-try">Try it: drag across the recording, then press Delete.</p>
-          </div>
+          </Reveal>
         </section>
 
         <section aria-label="Joining files" className="show">
@@ -82,9 +74,9 @@ export default function Home() {
         </section>
 
         <section id="tools" className="tools-sec wrap" aria-label="Tools">
-          <div className="rise">
+          <Reveal>
             <ToolList />
-          </div>
+          </Reveal>
         </section>
 
         <section id="how" className="how" aria-label="How it works">
@@ -97,35 +89,35 @@ export default function Home() {
 
         <section className="close" aria-label="Get Splice">
           <div className="close-words">
-            <h2 className="close-line rise">
+            <Reveal as="h2" className="close-line">
               Your file,
               <br />
               your phone.
-            </h2>
-            <p className="close-sentence rise" style={{ ["--d" as string]: "90ms" }}>
+            </Reveal>
+            <Reveal as="p" className="close-sentence" delay={0.09}>
               Splice installs from Google Play and runs on Android 8.0 and newer. Nothing to sign up for.
-            </p>
+            </Reveal>
           </div>
-          <div className="close-sheet rise" style={{ ["--d" as string]: "160ms" }}>
+          <Reveal className="close-sheet" delay={0.16} y={40}>
             <ExportSheet />
-          </div>
+          </Reveal>
         </section>
       </main>
 
       <footer className="tiles" aria-label="Footer">
-        <div className="tile tile-statement rise" style={{ ["--d" as string]: "0ms" }}>
+        <Reveal as="div" className="tile glass tile-statement" delay={0.0}>
           <p className="tile-big">
             Splice is made by HEXHAD, a small studio of tools for people who ship apps.
           </p>
           <p className="small soft">© 2026 HEXHAD Studios. Android is a trademark of Google LLC.</p>
-        </div>
-        <nav className="tile tile-nav rise" style={{ ["--d" as string]: "60ms" }} aria-label="Footer">
+        </Reveal>
+        <Reveal as="nav" className="tile glass tile-nav" delay={0.06} aria-label="Footer">
           <a href="#tools">Tools</a>
           <a href="#how">How it works</a>
           <a href="#questions">Questions</a>
           <a href="/privacy">Privacy policy</a>
-        </nav>
-        <div className="tile tile-family rise" style={{ ["--d" as string]: "120ms" }}>
+        </Reveal>
+        <Reveal as="div" className="tile glass tile-family" delay={0.12}>
           <p className="small soft">Also from HEXHAD</p>
           <ul>
             {FAMILY.map((p) => (
@@ -134,28 +126,28 @@ export default function Home() {
               </li>
             ))}
           </ul>
-        </div>
-        <div className="tile tile-mail rise" style={{ ["--d" as string]: "180ms" }}>
+        </Reveal>
+        <Reveal as="div" className="tile glass tile-mail" delay={0.18}>
           <p className="small soft">
             Sri Lanka, <LocalTime />
           </p>
           <a className="tile-email" href={`mailto:${CONTACT_EMAIL}`}>
             {CONTACT_EMAIL}
           </a>
-        </div>
-        <div className="tile tile-word rise" style={{ ["--d" as string]: "90ms" }}>
+        </Reveal>
+        <Reveal as="div" className="tile glass tile-word" delay={0.09}>
           <HexhadLockup size={40} className="tile-lockup" />
           <span className="tile-splice" aria-hidden>
             <SpliceIcon className="tile-splice-icon" />
             Splice
           </span>
-        </div>
-        <a className="tile tile-go rise" style={{ ["--d" as string]: "180ms" }} href={PLAY_URL}>
+        </Reveal>
+        <Reveal as="a" className="tile glass tile-go" delay={0.18} href={PLAY_URL}>
           <span>Get Splice on Google Play</span>
           <svg viewBox="0 0 48 48" width="56" height="56" aria-hidden>
             <path d="M12 36 36 12M16 12h20v20" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-        </a>
+        </Reveal>
       </footer>
     </>
   );

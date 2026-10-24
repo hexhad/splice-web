@@ -1,5 +1,6 @@
 "use client";
 
+import { Reveal } from "./Reveal";
 import { useId, useState } from "react";
 import { formatTime } from "@/lib/wave";
 
@@ -43,13 +44,13 @@ export function JoinDemo() {
           onChange={(e) => setText(e.target.value)}
           className="join-text"
         />
-        <h2 className="heading join-h join-h-left rise">
+        <Reveal as="h2" className="heading join-h join-h-left">
           Several files<span className="sr"> become one recording</span>
-        </h2>
+        </Reveal>
       </div>
 
       <div className="join-out">
-        <div data-ui className="joined rise" style={{ ["--d" as string]: "120ms" }}>
+        <Reveal data-ui className="joined glass" delay={0.12} y={32}>
           <div className="joined-head">
             <span>Main track</span>
             <span className="mono">{formatTime(total, false)}</span>
@@ -78,10 +79,10 @@ export function JoinDemo() {
           </ol>
           {files.length === 0 ? <p className="small soft">Write a line like “voice-note.m4a 1:20”.</p> : null}
           <p className="joined-foot small">Joined in order. Each seam gets a 2 ms fade, so nothing clicks.</p>
-        </div>
-        <p className="heading join-h join-h-right rise" aria-hidden>
+        </Reveal>
+        <Reveal as="p" className="heading join-h join-h-right" delay={0.08} aria-hidden>
           one recording
-        </p>
+        </Reveal>
       </div>
     </div>
   );
