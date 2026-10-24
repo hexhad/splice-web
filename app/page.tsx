@@ -48,7 +48,7 @@ export default function Home() {
         <section className="hero wrap">
           <div className="hero-words">
             <MaskedLines className="display" lines={["Mark the parts.", "Cut them at once."]} />
-            <Reveal onLoad delay={0.42} y={12} className="hero-copy">
+            <Reveal onLoad delay={0.4} y={28} className="hero-copy">
               <p className="statement hero-sentence">
                 Splice is an audio editor for Android that works entirely on your phone. No internet, no account, and the
                 microphone only when you record.
@@ -63,7 +63,7 @@ export default function Home() {
               </div>
             </Reveal>
           </div>
-          <Reveal onLoad delay={0.5} y={32} className="hero-demo">
+          <Reveal onLoad delay={0.55} y={90} from={0.92} className="hero-demo">
             <CutDemo />
             <p className="small soft hero-try">Try it: drag across the recording, then press Delete.</p>
           </Reveal>
@@ -89,7 +89,7 @@ export default function Home() {
 
         <section className="close" aria-label="Get Splice">
           <div className="close-words">
-            <Reveal as="h2" className="close-line">
+            <Reveal as="h2" className="close-line" y={80}>
               Your file,
               <br />
               your phone.
@@ -98,7 +98,7 @@ export default function Home() {
               Splice installs from Google Play and runs on Android 8.0 and newer. Nothing to sign up for.
             </Reveal>
           </div>
-          <Reveal className="close-sheet" delay={0.16} y={40}>
+          <Reveal className="close-sheet" delay={0.16} y={100} from={0.9}>
             <ExportSheet />
           </Reveal>
         </section>

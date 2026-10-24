@@ -57,8 +57,8 @@ export function Stages() {
   const shotRef = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: shotRef, offset: ["start end", "end start"] });
-  const drift = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [60, -60]);
-  const tilt = useTransform(scrollYProgress, [0, 0.5, 1], reduce ? [0, 0, 0] : [6, 0, -3]);
+  const drift = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [140, -140]);
+  const tilt = useTransform(scrollYProgress, [0, 0.5, 1], reduce ? [0, 0, 0] : [14, 0, -6]);
 
   return (
     <div className="stages">

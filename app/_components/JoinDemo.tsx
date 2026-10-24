@@ -44,13 +44,13 @@ export function JoinDemo() {
           onChange={(e) => setText(e.target.value)}
           className="join-text"
         />
-        <Reveal as="h2" className="heading join-h join-h-left">
+        <Reveal as="h2" className="heading join-h join-h-left" x={-120} y={0}>
           Several files<span className="sr"> become one recording</span>
         </Reveal>
       </div>
 
       <div className="join-out">
-        <Reveal data-ui className="joined glass" delay={0.12} y={32}>
+        <Reveal data-ui className="joined glass" delay={0.12} y={80} from={0.92}>
           <div className="joined-head">
             <span>Main track</span>
             <span className="mono">{formatTime(total, false)}</span>
@@ -80,7 +80,7 @@ export function JoinDemo() {
           {files.length === 0 ? <p className="small soft">Write a line like “voice-note.m4a 1:20”.</p> : null}
           <p className="joined-foot small">Joined in order. Each seam gets a 2 ms fade, so nothing clicks.</p>
         </Reveal>
-        <Reveal as="p" className="heading join-h join-h-right" delay={0.08} aria-hidden>
+        <Reveal as="p" className="heading join-h join-h-right" delay={0.08} x={120} y={0} aria-hidden>
           one recording
         </Reveal>
       </div>
