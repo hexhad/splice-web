@@ -1,8 +1,8 @@
 "use client";
 
 import Image, { type StaticImageData } from "next/image";
-import { motion } from "motion/react";
-import { useId, useState } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { useId, useRef, useState } from "react";
 import { Reveal, SWAP } from "./Reveal";
 import layers from "@/public/shots/layers.webp";
 import cut from "@/public/shots/cut.webp";
@@ -52,6 +52,13 @@ export function Stages() {
   const [at, setAt] = useState(1);
   const id = useId();
   const stage = STAGES[at];
+
+  // The phone drifts up and levels out as the section scrolls past (Motion's scroll-linked values).
+  const shotRef = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: shotRef, offset: ["start end", "end start"] });
+  const drift = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [60, -60]);
+  const tilt = useTransform(scrollYProgress, [0, 0.5, 1], reduce ? [0, 0, 0] : [6, 0, -3]);
 
   return (
     <div className="stages">
@@ -118,21 +125,23 @@ export function Stages() {
         </Reveal>
       </div>
 
-      <div className="stages-shot">
-        <Reveal settle className="stages-phone glass">
-          {STAGES.map((s, i) => (
-            <motion.div
-              key={s.name}
-              className="stages-frame"
-              aria-hidden={i !== at}
-              initial={false}
-              animate={i === at ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.98 }}
-              transition={SWAP}
-            >
-              <Image src={s.shot} alt={i === at ? s.alt : ""} sizes="(max-width: 760px) 80vw, 380px" />
-            </motion.div>
-          ))}
-        </Reveal>
+      <div className="stages-shot" ref={shotRef}>
+        <motion.div style={{ y: drift, rotateX: tilt, transformPerspective: 1200 }}>
+          <Reveal settle className="stages-phone glass">
+            {STAGES.map((s, i) => (
+              <motion.div
+                key={s.name}
+                className="stages-frame"
+                aria-hidden={i !== at}
+                initial={false}
+                animate={i === at ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.98 }}
+                transition={SWAP}
+              >
+                <Image src={s.shot} alt={i === at ? s.alt : ""} sizes="(max-width: 760px) 80vw, 380px" />
+              </motion.div>
+            ))}
+          </Reveal>
+        </motion.div>
       </div>
     </div>
   );

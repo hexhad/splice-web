@@ -158,9 +158,11 @@
   display: grid; place-items: center; padding: 48px var(--gutter);
   background: radial-gradient(50% 45% at 50% 45%, rgb(255 119 22 / 0.28), transparent 70%), var(--dark-2);
 }
-.stages-phone { display: grid; padding: 10px; border-radius: 44px; --glass-bg: rgb(255 255 255 / 0.08); --glass-edge: rgb(255 214 180 / 0.45); --glass-rim: rgb(255 255 255 / 0.08); }
+.stages-phone { display: grid; padding: 10px; border-radius: clamp(44px, 5.4svh, 56px); --glass-bg: rgb(255 255 255 / 0.08); --glass-edge: rgb(255 214 180 / 0.45); --glass-rim: rgb(255 255 255 / 0.08); }
 .stages-frame { grid-area: 1 / 1; }
-.stages-shot img { display: block; height: min(72svh, 720px); width: auto; max-width: 100%; object-fit: contain; border-radius: 34px; }
+/* The captures carry the phone's own black screen corners (radius ≈ 13% of the width, 88 of 685 px):
+   clip a little inside them, as an ellipse in percent so it scales with the image. */
+.stages-shot img { display: block; height: min(72svh, 720px); width: auto; max-width: 100%; object-fit: contain; border-radius: 13.6% / 6.1%; }
 .swap-line { display: block; }
 .range { position: relative; height: 32px; }
 .range::before, .range::after { content: ""; position: absolute; left: 0; top: 12px; height: 8px; border-radius: 4px; }
