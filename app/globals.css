@@ -162,9 +162,11 @@ a { color: inherit; }
 
 /* Buttons: pill, one fill, as in the app */
 /* Warm Ember light behind the page so the glass has something to refract. */
+body { position: relative; }
+/* Scrolls with the page (not fixed), so glass above it never has to be re-blurred while scrolling. */
 body::before {
   content: "";
-  position: fixed;
+  position: absolute;
   inset: -20vh -10vw auto;
   height: 110vh;
   background:
@@ -174,10 +176,10 @@ body::before {
   z-index: -1;
 }
 
+/* Cards sit on still backgrounds, so a translucent fill reads the same as a blur and costs nothing.
+   Only the header (content moves behind it) gets a real backdrop blur, via .glass-live. */
 .glass {
   background: var(--glass-bg);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  backdrop-filter: blur(24px) saturate(180%);
   border: 1px solid var(--glass-rim); /* taste-skill-ignore: glass rim */
   box-shadow: var(--glass-shadow);
   position: relative;
@@ -197,6 +199,10 @@ body::before {
   mask-composite: exclude;
   pointer-events: none;
   z-index: -1;
+}
+.glass-live {
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
 }
 @media (prefers-reduced-transparency: reduce) {
   .glass { background: var(--tone); -webkit-backdrop-filter: none; backdrop-filter: none; }

@@ -27,7 +27,7 @@ export default function Home() {
       </a>
 
       <header className="top">
-        <div className="bar glass">
+        <div className="bar glass glass-live">
         <a href="/" className="wordmark" aria-label="Splice, home">
           <SpliceIcon size={32} className="wordmark-icon" />
           Splice
@@ -48,7 +48,7 @@ export default function Home() {
         <section className="hero wrap">
           <div className="hero-words">
             <MaskedLines className="display" lines={["Mark the parts.", "Cut them at once."]} />
-            <Reveal onLoad delay={0.4} y={28} className="hero-copy">
+            <Reveal onLoad delay={0.3} y={28} className="hero-copy">
               <p className="statement hero-sentence">
                 Splice is an audio editor for Android that works entirely on your phone. No internet, no account, and the
                 microphone only when you record.
@@ -63,7 +63,7 @@ export default function Home() {
               </div>
             </Reveal>
           </div>
-          <Reveal onLoad delay={0.55} y={90} from={0.92} className="hero-demo">
+          <Reveal onLoad delay={0.38} y={80} from={0.94} className="hero-demo">
             <CutDemo />
             <p className="small soft hero-try">Try it: drag across the recording, then press Delete.</p>
           </Reveal>

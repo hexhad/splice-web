@@ -3,10 +3,10 @@
 import { motion, MotionConfig } from "motion/react";
 import type { CSSProperties, ReactNode } from "react";
 
-/** One spring for every entrance: a touch of bounce, settles in about 1 s. */
-export const ENTER = { type: "spring", bounce: 0.18, duration: 1 } as const;
+/** One spring for every entrance: a touch of bounce, settles in about 0.7 s. */
+export const ENTER = { type: "spring", bounce: 0.14, duration: 0.7 } as const;
 /** Short swaps inside the demos. */
-export const SWAP = { type: "spring", bounce: 0, duration: 0.32 } as const;
+export const SWAP = { type: "spring", bounce: 0, duration: 0.28 } as const;
 
 const TAGS = {
   div: motion.div,
